@@ -58,11 +58,11 @@ impl Gladiator {
     }
 
     /// checks if a move is already in the vector moves
-    pub fn is_move_known(&self, _move: attacks::Attack) -> bool {
+    pub fn is_move_known(&self, _move: &attacks::Attack) -> bool {
         let v_iter = self.moves.iter();
         let mut result: bool = false;
         for i in v_iter {
-            if *i == _move {
+            if *i == *_move {
                 result = true;
             }
         }

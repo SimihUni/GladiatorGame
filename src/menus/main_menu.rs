@@ -25,7 +25,7 @@ pub fn main_menu() {
         };
         let input = input.as_str().trim();
         println!("{:?}",&input);
-        let choice = u8::from_str(input).unwrap();
+        let choice = u8::from_str(input).unwrap_or_default();
         match choice {
             1 => {
                 if tutorial {

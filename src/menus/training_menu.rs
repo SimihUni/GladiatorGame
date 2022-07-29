@@ -3,6 +3,31 @@ use crate::tio;
 use crate::attacks;
 use std::str::FromStr;
 
+fn print_training_option(player: &gladiator_struct::Gladiator, cost: u8, mv:attacks::Attack, order_in_menu: u8) {
+    print!("\n\t{}: {}",order_in_menu,mv);
+    if player.is_move_known(&mv) {
+        print!(" - Known");
+    }
+    else{
+        print!(" - Cost {} TP",cost);
+    }
+}
+
+fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:attacks::Attack) {
+    if player.is_move_known(&mv) {
+        println!("\n{} already knows how to {} people.",player.get_name(),&mv)
+    }
+    else {
+        if player.get_tp() < cost {
+            println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
+            return;
+        }
+        player.set_tp(player.get_tp() - cost);
+        player.add_move(attacks::Attack::Tackle);
+        println!("\n{} learned how to {} people.",player.get_name(),mv);
+    }
+}
+
 pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bool) {
     loop{
         print!("\n\tTraining points: {}",player.get_tp());
@@ -10,46 +35,16 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             print!("\n{}: The least I should do is train to hit and to dodge.",player.get_name());
             print!("\n\tTrain moves");
             print!("\n\t0: Go back");
-            print!("\n\t1: Stab");
-            if player.is_move_known(attacks::Attack::Stab) {
-                print!(" - Known");
-            }
-            else{
-                print!(" - Cost 1 TP");
-            }
-            print!("\n\t2: Dodge");
-            if player.is_move_known(attacks::Attack::Dodge) {
-                print!(" - Known");
-            }
-            else{
-                print!(" - Cost 1 TP");
-            }
+            print_training_option(&player,1,attacks::Attack::Stab,1);
+            print_training_option(&player,1,attacks::Attack::Dodge,2);
             print!("\n Choose: ");
         }
         else{
             print!("\n\tTrain moves");
             print!("\n\t0: Go back");
-            print!("\n\t1: Tackle");
-            if player.is_move_known(attacks::Attack::Tackle) {
-                print!(" - Known");
-            }
-            else{
-                print!(" - Cost 1 TP");
-            }
-            print!("\n\t2: Stun");
-            if player.is_move_known(attacks::Attack::Stun) {
-                print!(" - Known");
-            }
-            else{
-                print!(" - Cost 1 TP");
-            }
-            print!("\n\t3: Smash");
-            if player.is_move_known(attacks::Attack::Smash) {
-                print!(" - Known");
-            }
-            else{
-                print!(" - Cost 2 TP");
-            }
+            print_training_option(&player,1,attacks::Attack::Tackle,1);
+            print_training_option(&player,1,attacks::Attack::Stun,2);
+            print_training_option(&player,2,attacks::Attack::Smash,3);
             print!("\n Choose: ");
         }
         let input = match tio::get_input() {
@@ -57,13 +52,15 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
+
+        //for debug
         println!("{:?}",&input);
-        let choice = u8::from_str(input).unwrap();
+        let choice = u8::from_str(input).unwrap_or_default();
         match choice {
             0 => break,
             1 => {
                 if *tutorial {
-                    if player.is_move_known(attacks::Attack::Stab) {
+                    if player.is_move_known(&attacks::Attack::Stab) {
                         println!("\n{} already knows how to stab people.",player.get_name())
                     }
                     else {
@@ -72,22 +69,12 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
                     }
                 }
                 else {
-                    if player.is_move_known(attacks::Attack::Tackle) {
-                        println!("\n{} already knows how to tackle people.",player.get_name())
-                    }
-                    else {
-                        if player.get_tp() < 1 {
-                            println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
-                            continue;
-                        }
-                        player.add_move(attacks::Attack::Tackle);
-                        println!("\n{} learned how to tackle people.",player.get_name());
-                    }
+                    try_to_learn_a_move(player, 1, attacks::Attack::Tackle);
                 }
             },
             2 => {
                 if *tutorial {
-                    if player.is_move_known(attacks::Attack::Dodge) {
+                    if player.is_move_known(&attacks::Attack::Dodge) {
                         println!("\n{} already knows how to dodge attacks.",player.get_name())
                     }
                     else {
@@ -96,36 +83,13 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
                     }
                 }
                 else {
-                    if player.is_move_known(attacks::Attack::Stun) {
-                        println!("\n{} already knows how to stun people.",player.get_name())
-                    }
-                    else {
-                        if player.get_tp() < 1 {
-                            println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
-                            continue;
-                        }
-                        player.add_move(attacks::Attack::Stun);
-                        println!("\n{} learned how to stun people.",player.get_name());
-                    }
+                    try_to_learn_a_move(player, 1, attacks::Attack::Stun);
                 }
             },
             3 => {
-                if player.is_move_known(attacks::Attack::Smash) {
-                    println!("\n{} already knows how to smash people.",player.get_name())
-                }
-                else {
-                    if player.get_tp() < 2 {
-                        println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
-                    }
-                    else
-                    {
-                        player.add_move(attacks::Attack::Smash);
-                        println!("\n{} learned how to smash people.",player.get_name());
-                    }
-                }
+                try_to_learn_a_move(player, 2, attacks::Attack::Smash);
             },
             _ => continue,
         }
     }
-    
 }
