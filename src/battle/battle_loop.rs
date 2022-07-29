@@ -1,5 +1,5 @@
 use crate::gladiator_struct::Gladiator;
-use crate::battle_struct::Battle;
+use crate::battle::battle_struct::Battle;
 
 pub fn battle_loop(battle_order: &u16, player: Gladiator){
     //idea: could add intro depending on what battle it is.

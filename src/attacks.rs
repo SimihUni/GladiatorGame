@@ -1,7 +1,7 @@
 use std::fmt;
 
 
-#[derive(PartialEq,Clone)]
+#[derive(PartialEq,Clone,Copy)]
 pub enum Attack {
     Stab,
     Dodge,

@@ -67,9 +67,14 @@ impl Gladiator {
         self.training_points
     }
 
-    /// set training points
+    ///set training points
     pub fn set_tp(&mut self, new_tp: u8) {
         self.training_points = new_tp;
+    }
+
+    ///get move list in a vector
+    pub fn get_move_list(&self) -> Vec<attacks::Attack> {
+        self.moves.clone()
     }
 
     /// checks if a move is already in the vector moves
