@@ -3,6 +3,7 @@ use crate::tio;
 use crate::attacks;
 use std::str::FromStr;
 
+///check and print menu option for learning
 fn print_training_option(player: &gladiator_struct::Gladiator, cost: u8, mv:attacks::Attack, order_in_menu: u8) {
     print!("\n\t{}: {}",order_in_menu,mv);
     if player.is_move_known(&mv) {
@@ -13,6 +14,7 @@ fn print_training_option(player: &gladiator_struct::Gladiator, cost: u8, mv:atta
     }
 }
 
+///logic for trying to learn a move in training menu
 fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:attacks::Attack) {
     if player.is_move_known(&mv) {
         println!("\n{} already knows how to {} people.",player.get_name(),&mv)
@@ -37,7 +39,7 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             print!("\n\t0: Go back");
             print_training_option(&player,1,attacks::Attack::Stab,1);
             print_training_option(&player,1,attacks::Attack::Dodge,2);
-            print!("\n Choose: ");
+            println!("\n   Choose: ");
         }
         else{
             print!("\n\tTrain moves");
@@ -45,17 +47,18 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             print_training_option(&player,1,attacks::Attack::Tackle,1);
             print_training_option(&player,1,attacks::Attack::Stun,2);
             print_training_option(&player,2,attacks::Attack::Smash,3);
-            print!("\n Choose: ");
+            println!("\n   Choose: ");
         }
+        //input segment
         let input = match tio::get_input() {
             Ok(i) => i,
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
-
-        //for debug
-        println!("{:?}",&input);
+        println!("{:?}",&input);    //for debug
         let choice = u8::from_str(input).unwrap_or_default();
+        //end of input segment
+
         match choice {
             0 => break,
             1 => {

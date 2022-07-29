@@ -11,7 +11,8 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
     //menu for starting stats
     loop {
         print!("\n\t   SPD|STM|STR");
-        print!("\n\t1: 10 |5  |5\n\t2: 5  |10 |5\n\t3: 5  |5  |10\n    Input: ");
+        print!("\n\t1: 10 |5  |5\n\t2: 5  |10 |5\n\t3: 5  |5  |10\n    Input: \n");
+        //input segment
         let input = match tio::get_input() {
             Ok(i) => i,
             Err(e) => panic!("Error in io. {}",e),
@@ -19,6 +20,7 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
         let input = input.as_str().trim();
         println!("{:?}",&input);
         let choice = u8::from_str(input).unwrap_or_default();
+        //end of input segment
         match choice {
             1 => {stats = (10,5,5); break;},
             2 => {stats = (5,10,5); break;},
@@ -29,12 +31,14 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
     //prompt for character name
     io::stdout().flush().unwrap();
     println!("Choose a name for your gladiator: ");
+    //input segment
     let input = match tio::get_input() {
         Ok(i) => i,
         Err(e) => panic!("Error in io. {}",e),
     };
     let input = String::from(input.trim());
-    
+    //end of input segment
+
     //debug
     println!("name of gladiator = {:?}",&input);
 

@@ -1,7 +1,7 @@
 use std::fmt;
 
 
-#[derive(PartialEq)]
+#[derive(PartialEq,Clone)]
 pub enum Attack {
     Stab,
     Dodge,
@@ -9,6 +9,7 @@ pub enum Attack {
     Smash,
     Stun,
 }
+
 
 impl fmt::Display for Attack {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

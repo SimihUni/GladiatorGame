@@ -1,13 +1,13 @@
 use crate::attacks;
 
 pub struct Gladiator {
-    name: String,
-    speed: u8,
-    stamina: u8,
-    strength: u8,
-    moves: Vec<attacks::Attack>,
-    health_points: u32,
-    training_points: u8,
+    name: String,                 //name of the gladiator
+    speed: u8,                    //determines which gladiator goes first in battle
+    stamina: u8,                  //determines how much HP a gladiator has
+    strength: u8,                 //determines how much damage a gladiator deals
+    moves: Vec<attacks::Attack>,  //vector with the moves a gladiator knows
+    health_points: u32,           //health points, if 0 => game over for gladiator
+    training_points: u8,          //training points, used for learning new moves
 }
 
 impl Gladiator {
@@ -24,10 +24,25 @@ impl Gladiator {
         }
     }
 
+    ///clone a gladiator, with 0 TP
+    pub fn clone(&self) -> Gladiator {
+        Gladiator {
+            name: self.name.clone(),
+            speed: self.speed,
+            stamina: self.stamina,
+            strength: self.strength,
+            moves: self.moves.clone(),
+            health_points: self.stamina as u32 * 5,
+            training_points: 0,
+        }
+    }
+
+    ///add a new move to the move verctor
     pub fn add_move(&mut self, new_move: attacks::Attack) {
         self.moves.push(new_move);
     }
 
+    ///gets the gladiators name
     pub fn get_name(&self) -> String {
         self.name.clone()
     }
