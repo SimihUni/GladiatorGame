@@ -1,13 +1,20 @@
 use crate::attacks;
 
 pub struct Gladiator {
-    name: String,                 //name of the gladiator
-    speed: u8,                    //determines which gladiator goes first in battle
-    stamina: u8,                  //determines how much HP a gladiator has
-    strength: u8,                 //determines how much damage a gladiator deals
-    moves: Vec<attacks::Attack>,  //vector with the moves a gladiator knows
-    health_points: u32,           //health points, if 0 => game over for gladiator
-    training_points: u8,          //training points, used for learning new moves
+    ///name of the gladiator
+    name: String,
+    ///determines which gladiator goes first in battle
+    speed: u8,
+    ///determines how much HP a gladiator has
+    stamina: u8,
+    ///determines how much damage a gladiator deals
+    strength: u8,
+    ///vector with the moves a gladiator knows
+    moves: Vec<attacks::Attack>,
+    ///health points, if 0 => game over for gladiator
+    health_points: u32,
+    ///training points, used for learning new moves
+    training_points: u8,
 }
 
 impl Gladiator {
