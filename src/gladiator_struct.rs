@@ -59,6 +59,21 @@ impl Gladiator {
         (self.speed,self.stamina,self.strength)
     }
 
+    ///get strength
+    pub fn get_str(&self) -> u8 {
+        self.strength
+    }
+
+    ///get stamina
+    pub fn get_stm(&self) -> u8 {
+        self.stamina
+    }
+
+    ///get speed
+    pub fn get_spd(&self) -> u8 {
+        self.speed
+    }
+
     ///get health points
     pub fn get_hp(&self) -> u32 {
         self.health_points

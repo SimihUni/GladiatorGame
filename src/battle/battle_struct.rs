@@ -24,6 +24,10 @@ impl Battle {
         }
     }
 
+    pub fn unstun_gladiators(&mut self) {
+        self.stunned = (false,false)
+    }
+
     pub fn stun_player(&mut self) {
         self.stunned.0 = true
     }
