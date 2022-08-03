@@ -10,8 +10,9 @@ pub struct Battle {
 
 impl Battle {
     pub fn new(player: &Gladiator, enemy: &Gladiator) -> Battle {
+        let  players_turn: bool = player.get_stats().0 >= enemy.get_stats().0;
         Battle {
-            players_turn: true,
+            players_turn,
             turn_count: 1,
             player: player.clone(),
             enemy: enemy.clone(),
