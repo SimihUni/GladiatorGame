@@ -32,6 +32,9 @@ fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:att
 
 pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bool) {
     loop{
+        if player.get_move_list().len() > 1 {
+            *tutorial = false;
+        }
         print!("\n\tTraining points: {}",player.get_tp());
         if *tutorial {
             print!("\n{}: The least I should do is train to hit and to dodge.",player.get_name());
@@ -68,6 +71,7 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
                     }
                     else {
                         player.add_move(attacks::Attack::Stab);
+                        player.set_tp(player.get_tp() - 1);
                         println!("\n{} learned how to stab people.",player.get_name());
                     }
                 }
@@ -82,6 +86,7 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
                     }
                     else {
                         player.add_move(attacks::Attack::Dodge);
+                        player.set_tp(player.get_tp() - 1);
                         println!("\n{} learned how to dodge attacks.",player.get_name());
                     }
                 }

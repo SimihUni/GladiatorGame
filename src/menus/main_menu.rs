@@ -2,6 +2,7 @@ use crate::menus::choose_character;
 use crate::menus::training_menu;
 use crate::attacks;
 use crate::tio;
+use crate::battle::battle_loop::battle_loop;
 use std::str::FromStr;
 
 pub fn main_menu() {
@@ -46,7 +47,7 @@ pub fn main_menu() {
                     print!("\n{}: I can't fight now.",player.get_name());
                 }
                 else{
-                    todo!();
+                    battle_loop(&battle_order,player.clone());
                 }
             },
             //training

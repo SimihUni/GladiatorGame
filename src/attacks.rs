@@ -23,13 +23,20 @@ impl fmt::Display for Attack {
 }
 
 impl Attack {
-    pub fn calculate_damage(&self,player: &Gladiator) -> u32 {
-        match *self {
+    pub fn calculate_damage(&self,player: &Gladiator, enemy: &Gladiator) -> u32 {
+        let damage = match *self {
             Attack::Stab => (player.get_str() as f32 * 1.5).floor() as u32,
             Attack::Dodge => 0,
             Attack::Tackle => (player.get_str() * 2) as u32,
             Attack::Smash => (player.get_str() * 3) as u32,
             Attack::Stun => 5,
+        };
+        if self.check_if_hit(player,enemy){
+            return damage;
+        }
+        else {
+            //display fail to hit message TODO
+            return 0;
         }
     }
 

@@ -1,4 +1,4 @@
-use crate::gladiator_struct::Gladiator;
+use crate::{gladiator_struct::Gladiator, attacks};
 use std::fmt;
 
 pub struct Battle {
@@ -85,6 +85,30 @@ impl Battle {
             }
         }
         None
+    }
+
+    ///deals damage to player
+    pub fn deal_damage_to_player(&mut self, atk: attacks::Attack) {
+        let damage_to_deal = atk.calculate_damage(&self.enemy,&self.player);
+        if self.player.get_hp() - damage_to_deal <= 0 {
+            //player dies
+            self.player.set_hp(0);
+        }
+        else {
+            self.player.set_hp(self.player.get_hp() - damage_to_deal)
+        }
+    }
+
+    ///deals damage to enemy
+    pub fn deal_damage_to_enemy(&mut self, atk: attacks::Attack) {
+        let damage_to_deal = atk.calculate_damage(&self.player,&self.enemy);
+        if self.enemy.get_hp() < damage_to_deal {
+            //player dies
+            self.enemy.set_hp(0);
+        }
+        else {
+            self.enemy.set_hp(self.enemy.get_hp() - damage_to_deal)
+        }
     }
 }
 
