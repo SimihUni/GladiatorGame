@@ -1,10 +1,11 @@
-use crate::tio;
+use crate::tio::{self, clear_screen};
 use std::str::FromStr;
 use crate::menus::main_menu;
 
 ///menu for starting the game
 pub fn start_menu() {
     loop {
+        clear_screen();
         print!("\n\t1: Start game\n\t2: Exit\n    Input: \n");
         //input segment
         let input = match tio::get_input() {

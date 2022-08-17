@@ -2,6 +2,7 @@ use crate::gladiator_struct::Gladiator;
 use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
 use crate::tio::clear_screen;
+use crate::tio::press_to_continue;
 use super::enemies::get_enemy;
 use super::enemies::get_enemy_move;
 
@@ -80,10 +81,12 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
         if (battle_info.is_player_turn() && battle_info.is_enemy_stunned()) || (!battle_info.is_player_turn() && battle_info.is_player_stunned()) {
             //display who got stunned
             battle_info.unstun_gladiators();
+            press_to_continue();
             continue;
         }
 
         battle_info.flip_turn();
+        press_to_continue();
         //repeat
     }
 }

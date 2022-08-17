@@ -1,12 +1,12 @@
 //terminal io operations
 
-use std::io;
+use std::io::{stdin, stdout, Read, Write,Result};
 use std::env;
 
 ///gets a line of input from stdin
-pub fn get_input() -> io::Result<String> {
+pub fn get_input() -> Result<String> {
     let mut buffer = String::new();
-    io::stdin().read_line(&mut buffer)?;
+    stdin().read_line(&mut buffer)?;
     Ok(buffer)
 }
 
@@ -20,4 +20,12 @@ pub fn clear_screen() {
         "windows" => std::process::Command::new("cls"),
         _ => return,
     };
+}
+
+pub fn press_to_continue() {
+    let mut stdout = stdout();
+    stdout.write(b"Press Enter to continue...").unwrap();
+    stdout.flush().unwrap();
+    stdin().read(&mut [0]).unwrap();
+
 }
