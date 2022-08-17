@@ -24,8 +24,8 @@ pub fn clear_screen() {
 
 pub fn press_to_continue() {
     let mut stdout = stdout();
+    let mut buffer = String::new();
     stdout.write(b"Press Enter to continue...").unwrap();
     stdout.flush().unwrap();
-    stdin().read(&mut [0]).unwrap();
-
+    stdin().read_line(&mut buffer).unwrap();
 }

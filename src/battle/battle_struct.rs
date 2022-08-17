@@ -101,7 +101,7 @@ impl Battle {
             return;
         }
         println!("{} used the move {} on {}",self.enemy.get_name(),atk,self.player.get_name());
-        if self.player.get_hp() - damage_to_deal <= 0 {
+        if self.player.get_hp() < damage_to_deal {
             //player dies
             println!("{} dealt fatal damage to {}",self.enemy.get_name(),self.player.get_name());
             self.player.set_hp(0);

@@ -25,6 +25,9 @@ pub fn battle_choose_move(move_list: Vec<Attack>) -> Attack {
         println!("{:?}",&input);
         let mut choice = u8::from_str(input).unwrap_or_default();
         //end of input segment
+        if choice == 0 {
+            continue;
+        }
         if choice <= move_list.len() as u8 {
             choice -= 1;
             return move_list[choice as usize];
