@@ -34,6 +34,7 @@ fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:att
 
 pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bool) {
     loop{
+        tio::clear_screen();
         if player.get_move_list().len() > 1 {
             *tutorial = false;
         }

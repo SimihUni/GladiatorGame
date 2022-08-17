@@ -1,5 +1,5 @@
 use std::fmt;
-use crate::gladiator_struct::{self, Gladiator};
+use crate::gladiator_struct::Gladiator;
 extern crate rand;
 use rand::Rng;
 

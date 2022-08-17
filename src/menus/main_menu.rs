@@ -11,11 +11,12 @@ pub fn main_menu() {
     //sets tutorial mode on
     let mut tutorial: bool = true;
     //sets the number of consecutive battles the gladiator has been in
-    let mut battle_order:u16 = 0;
+    let mut battle_difficulty:u16 = 1;
     //give the player 2 TP so they can learn the first two basic moves
     player.set_tp(2);
     //loop for the main menu
     loop {
+        tio::clear_screen();
         if tutorial && !(player.is_move_known(&attacks::Attack::Stab) && player.is_move_known(&attacks::Attack::Stab)) {
             //the player doesn't know the basic moves, so they are barred from battling
             print!("\n{}: I don't know any moves. So I need to train.",player.get_name());
@@ -47,7 +48,7 @@ pub fn main_menu() {
                     print!("\n{}: I can't fight now.",player.get_name());
                 }
                 else{
-                    battle_loop(&mut battle_order,&mut player);
+                    battle_loop(&mut battle_difficulty,&mut player);
                 }
             },
             //training

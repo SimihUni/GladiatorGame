@@ -10,6 +10,7 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
     let stats:(u8,u8,u8);
     //menu for starting stats
     loop {
+        tio::clear_screen();
         print!("\n\t   SPD|STM|STR");
         print!("\n\t1: 10 |5  |5\n\t2: 5  |10 |5\n\t3: 5  |5  |10\n    Input: \n");
         //input segment

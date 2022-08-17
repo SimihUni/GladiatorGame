@@ -1,9 +1,10 @@
 use crate::gladiator_struct::Gladiator;
 use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
+use crate::tio::clear_screen;
 
 ///main function for logic of a battle
-pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
+pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
     //idea: could add intro depending on what battle it is.
 
     //here should be a switch with enemies depending what battle order is, or randomized enemies made to match or challenge player
@@ -14,10 +15,11 @@ pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
     let mut battle_info = Battle::new(&player,&enemy);
 
     //idea: add turn limit, to balance infinite move uses --> Done
-    let turn_limit: u32 = *battle_order as u32 + 5;
+    let turn_limit: u32 = *battle_difficulty as u32 + 5;
     
     //loop
     loop {
+        clear_screen();
         //idea: add items, which means adding a currency, and menu for choosing items and so on
         //idea: add move uses to balance strong moves --> Obsolete because turn limit
         //idea: add battles against two enemies (not likely to happen)
@@ -47,14 +49,14 @@ pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
                     println!("Player won.");
                     //adding 2 TP to player
                     player.set_tp(player.get_tp() + 2);
-                    *battle_order += 1;
+                    *battle_difficulty += 1;
                     break
                 }
                 else {
                     println!("Enemy won.");
                     //lower difficulty
-                    if *battle_order > 1 {
-                        *battle_order -= 1;
+                    if *battle_difficulty > 1 {
+                        *battle_difficulty -= 1;
                     }
                     break
                 }
@@ -64,7 +66,7 @@ pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
                     println!("Draw. Both gladiators survived the battle.");
                     //adding 1 TP to player
                     player.set_tp(player.get_tp() + 1);
-                    *battle_order += 1;
+                    *battle_difficulty += 1;
                     break
                 }
             },
