@@ -47,7 +47,7 @@ pub fn main_menu() {
                     print!("\n{}: I can't fight now.",player.get_name());
                 }
                 else{
-                    battle_loop(&battle_order,&mut player);
+                    battle_loop(&mut battle_order,&mut player);
                 }
             },
             //training
