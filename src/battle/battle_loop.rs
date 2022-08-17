@@ -3,6 +3,7 @@ use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
 use crate::tio::clear_screen;
 use super::enemies::get_enemy;
+use super::enemies::get_enemy_move;
 
 ///main function for logic of a battle
 pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
@@ -39,7 +40,7 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
             //enemy's turn
             //deal damage
             //choose enemy's attack
-            //todo!();
+            battle_info.deal_damage_to_player(get_enemy_move(&enemy));
         }
 
         //check battle state
