@@ -73,7 +73,7 @@ pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
         //update turn variables
         battle_info.increment_turns();
         //check if a gladiator is stunned and if there is a need to change whose turn it is
-        if (battle_info.is_player_turn() && battle_info.is_enemy_stunned()) || (!battle_info.is_player_turn() && !battle_info.is_enemy_stunned()) {
+        if (battle_info.is_player_turn() && battle_info.is_enemy_stunned()) || (!battle_info.is_player_turn() && battle_info.is_player_stunned()) {
             //display who got stunned
             battle_info.unstun_gladiators();
             continue;
