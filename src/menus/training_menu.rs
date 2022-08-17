@@ -3,8 +3,6 @@ use crate::tio;
 use crate::attacks;
 use std::str::FromStr;
 
-//TODO add choice for upping stats of gladiator
-
 ///check and print menu option for learning
 fn print_training_option(player: &gladiator_struct::Gladiator, cost: u8, mv:attacks::Attack, order_in_menu: u8) {
     print!("\n\t{}: {}",order_in_menu,mv);
@@ -33,6 +31,7 @@ fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:att
 }
 
 pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bool) {
+    let cost_to_increase_stat = 3;
     loop{
         tio::clear_screen();
         if player.get_move_list().len() > 1 {
@@ -53,6 +52,27 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             print_training_option(&player,1,attacks::Attack::Tackle,1);
             print_training_option(&player,1,attacks::Attack::Stun,2);
             print_training_option(&player,2,attacks::Attack::Smash,3);
+            print!("\n\t4: Increase strength");
+            if player.get_str() == 255 {
+                print!(" - Max");
+            }
+            else {
+                print!(" - Currently: {} - Cost {}",player.get_str(),cost_to_increase_stat);
+            }
+            print!("\n\t5: Increase stamina");
+            if player.get_stm() == 255 {
+                print!(" - Max");
+            }
+            else {
+                print!(" - Currently: {} - Cost {}",player.get_stm(),cost_to_increase_stat);
+            }
+            print!("\n\t6: Increase speed");
+            if player.get_spd() == 255 {
+                print!(" - Max");
+            }
+            else {
+                print!(" - Currently: {} - Cost {}",player.get_spd(),cost_to_increase_stat);
+            }
             println!("\n   Choose: ");
         }
         //input segment
@@ -99,6 +119,46 @@ pub fn training_menu(player: &mut gladiator_struct::Gladiator, tutorial: &mut bo
             },
             3 => {
                 try_to_learn_a_move(player, 2, attacks::Attack::Smash);
+            },
+            4 => {
+                if player.get_str() == 255 {
+                    println!("\n{} is at peek strength.",player.get_name());
+                    continue;
+                }
+                if player.get_tp() < cost_to_increase_stat {
+                    println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
+                    return;
+                }
+                player.set_tp(player.get_tp() - cost_to_increase_stat);
+                //increase strength
+                player.increase_str();
+                println!("\n{} increased his strength to {}.",player.get_name(),player.get_str());
+            },
+            5 => {
+                if player.get_stm() == 255 {
+                    println!("\n{} is at peek stamina.",player.get_name());
+                    continue;
+                }
+                if player.get_tp() < cost_to_increase_stat {
+                    println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
+                    return;
+                }
+                player.set_tp(player.get_tp() - cost_to_increase_stat);
+                player.increase_stm();
+                println!("\n{} increased his stamina to {}.",player.get_name(),player.get_stm());
+            },
+            6 => {
+                if player.get_spd() == 255 {
+                    println!("\n{} is at peek speed.",player.get_name());
+                    continue;
+                }
+                if player.get_tp() < cost_to_increase_stat {
+                    println!("\n{} doesn't have enough training points, go battle some more than come back.",player.get_name());
+                    return;
+                }
+                player.set_tp(player.get_tp() - cost_to_increase_stat);
+                player.increase_spd();
+                println!("\n{} increased his speed to {}.",player.get_name(),player.get_spd());
             },
             _ => continue,
         }

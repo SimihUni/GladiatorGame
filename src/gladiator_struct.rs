@@ -64,14 +64,29 @@ impl Gladiator {
         self.strength
     }
 
+    ///increase streangth with 1
+    pub fn increase_str(&mut self) {
+        self.strength += 1;
+    }
+
     ///get stamina
     pub fn get_stm(&self) -> u8 {
         self.stamina
     }
 
+    ///increase stamina with 1
+    pub fn increase_stm(&mut self) {
+        self.stamina += 1;
+    }
+
     ///get speed
     pub fn get_spd(&self) -> u8 {
         self.speed
+    }
+
+    ///increase speed with 1
+    pub fn increase_spd(&mut self) {
+        self.speed += 1;
     }
 
     ///get health points
