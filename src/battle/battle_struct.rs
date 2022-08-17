@@ -141,7 +141,7 @@ impl Battle {
 
 impl fmt::Display for Battle {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_fmt(format_args!("\n\t Battle between {} and {}\n\n\tPlayer HP:{}\n\tEnemy HP:{}\n\n\tIt is {}'s turn.",
+        f.write_fmt(format_args!("\n\tBattle between {} and {}\n\n\tPlayer HP:{}\n\tEnemy HP:{}\n\n\tIt is {}'s turn.",
          self.player.get_name(), self.enemy.get_name(),self.player.get_hp(), self.enemy.get_hp(),self.get_this_turn_name()))
     }
 }

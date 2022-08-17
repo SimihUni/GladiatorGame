@@ -2,6 +2,7 @@ use crate::gladiator_struct::Gladiator;
 use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
 use crate::tio::clear_screen;
+use super::enemies::get_enemy;
 
 ///main function for logic of a battle
 pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
@@ -9,7 +10,7 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
 
     //here should be a switch with enemies depending what battle order is, or randomized enemies made to match or challenge player
     //temporary enemy for testing
-    let enemy = Gladiator::new("Grog".to_string(),4,3,4);
+    let enemy = get_enemy(*battle_difficulty);
 
     //creating battle structure that controls the data that is relevent to the current battle.
     let mut battle_info = Battle::new(&player,&enemy);
@@ -26,7 +27,7 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
 
         //screen with battle stats
         println!("{}",battle_info);
-        println!("{} turns remaining.",turn_limit-battle_info.get_turn_count());
+        println!("\t{} turns remaining.",turn_limit-battle_info.get_turn_count());
 
         //choose attack
         if battle_info.is_player_turn() {
