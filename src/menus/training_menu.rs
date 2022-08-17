@@ -27,7 +27,7 @@ fn try_to_learn_a_move(player: &mut gladiator_struct::Gladiator,cost: u8, mv:att
             return;
         }
         player.set_tp(player.get_tp() - cost);
-        player.add_move(attacks::Attack::Tackle);
+        player.add_move(mv);
         println!("\n{} learned how to {} people.",player.get_name(),mv);
     }
 }

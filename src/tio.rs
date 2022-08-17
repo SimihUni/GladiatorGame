@@ -11,6 +11,9 @@ pub fn get_input() -> io::Result<String> {
 }
 
 pub fn clear_screen() {
+    //debug
+    println!("\n-------------------------------------------------------------------------------------------\n");
+
     match env::consts::OS {
         "linux" => std::process::Command::new("clear"),
         "macos" => std::process::Command::new("clear"),
