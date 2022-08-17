@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use crate::gladiator_struct::Gladiator;
 use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
@@ -7,12 +9,12 @@ use super::enemies::get_enemy;
 use super::enemies::get_enemy_move;
 
 ///main function for logic of a battle
-pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
+pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator, random_enemy: &mut bool) {
     //idea: could add intro depending on what battle it is.
 
     //here should be a switch with enemies depending what battle order is, or randomized enemies made to match or challenge player
     //temporary enemy for testing
-    let enemy = get_enemy(*battle_difficulty);
+    let enemy = get_enemy(*battle_difficulty,*random_enemy);
 
     //creating battle structure that controls the data that is relevent to the current battle.
     let mut battle_info = Battle::new(&player,&enemy);
@@ -53,6 +55,11 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator) {
                     //adding 2 TP to player
                     player.set_tp(player.get_tp() + 2);
                     *battle_difficulty += 1;
+                    if enemy.get_name() == String::from_str("Boss Man").unwrap() {
+                        *random_enemy = true;
+                        println!("\n\tCongratulations you defeated the final boss.\n\n\tNow you can continue to fight random gladiators named Razvigor, but this was the end of the game\n");
+                        press_to_continue();
+                    }
                     break
                 }
                 else {

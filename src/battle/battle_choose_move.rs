@@ -22,7 +22,8 @@ pub fn battle_choose_move(move_list: Vec<Attack>) -> Attack {
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
-        println!("{:?}",&input);
+        //debug
+        //println!("{:?}",&input);
         let mut choice = u8::from_str(input).unwrap_or_default();
         //end of input segment
         if choice == 0 {

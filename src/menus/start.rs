@@ -13,7 +13,8 @@ pub fn start_menu() {
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
-        println!("{:?}",&input);
+        //debug
+        //println!("{:?}",&input);
         let choice = u8::from_str(input).unwrap_or_default();
         //end of input segment
         match choice {

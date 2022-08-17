@@ -3,7 +3,17 @@ use crate::attacks::Attack;
 extern crate rand;
 use rand::Rng;
 
-pub fn get_enemy(battle_difficulty: u16) -> Gladiator {
+pub fn get_enemy(battle_difficulty: u16,random:bool) -> Gladiator {
+    if random && battle_difficulty > 10 {
+        let mut random_gladiator:Gladiator = Gladiator::new("Razvigor".to_string(),rand::thread_rng().gen_range(0..255) as u8,
+        rand::thread_rng().gen_range(0..255) as u8,rand::thread_rng().gen_range(0..255) as u8 );
+        random_gladiator.add_move(Attack::Stab);
+        random_gladiator.add_move(Attack::Tackle);
+        random_gladiator.add_move(Attack::Smash);
+        random_gladiator.add_move(Attack::Stun);
+        random_gladiator.add_move(Attack::Dodge);
+        return random_gladiator
+    }
     let mut roster: Vec<Gladiator> = Vec::new();
 
     roster.push(Gladiator::new("Grog".to_string(),4,3,4));

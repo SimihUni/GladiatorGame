@@ -71,7 +71,7 @@ impl Attack {
         let random_number = rand::thread_rng().gen_range(1..101);
 
         //for debug
-        println!("random number: {}\nchance: {}",random_number,chance);
+        //println!("random number: {}\nchance: {}",random_number,chance);
 
         random_number < chance 
     }

@@ -1,6 +1,6 @@
 //terminal io operations
 
-use std::io::{stdin, stdout, Read, Write,Result};
+use std::io::{stdin, stdout, Write,Result};
 use std::env;
 
 ///gets a line of input from stdin

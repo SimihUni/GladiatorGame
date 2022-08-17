@@ -14,6 +14,10 @@ pub fn main_menu() {
     let mut battle_difficulty:u16 = 1;
     //give the player 2 TP so they can learn the first two basic moves
     player.set_tp(2);
+
+    //after defeating the last boss, this variable activates random enemies
+    let mut random_enemy: bool = false;
+
     //loop for the main menu
     loop {
         tio::clear_screen();
@@ -37,7 +41,8 @@ pub fn main_menu() {
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
-        println!("{:?}",&input);
+        //debug
+        //println!("{:?}",&input);
         let choice = u8::from_str(input).unwrap_or_default();
         //end of input segment
         match choice {
@@ -48,7 +53,7 @@ pub fn main_menu() {
                     print!("\n{}: I can't fight now.",player.get_name());
                 }
                 else{
-                    battle_loop(&mut battle_difficulty,&mut player);
+                    battle_loop(&mut battle_difficulty,&mut player,&mut random_enemy);
                 }
             },
             //training
@@ -57,6 +62,7 @@ pub fn main_menu() {
             //3 => todo!(),
             //exit
             3 => std::process::exit(0),
+            255 => battle_difficulty = 20,
             _ => continue,
         }
     }

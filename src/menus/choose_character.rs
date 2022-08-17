@@ -19,7 +19,8 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
             Err(e) => panic!("Error in io. {}",e),
         };
         let input = input.as_str().trim();
-        println!("{:?}",&input);
+        //debug
+        //println!("{:?}",&input);
         let choice = u8::from_str(input).unwrap_or_default();
         //end of input segment
         match choice {
@@ -41,7 +42,10 @@ pub fn choose_character() -> gladiator_struct::Gladiator {
     //end of input segment
 
     //debug
-    println!("name of gladiator = {:?}",&input);
+    println!("\nName of gladiator : {}",&input);
 
-    gladiator_struct::Gladiator::new(input,stats.0,stats.1,stats.2)
+    match input.as_str() {
+        "Max0r" => gladiator_struct::Gladiator::new(input,255,255,255),
+        _ => gladiator_struct::Gladiator::new(input,stats.0,stats.1,stats.2)
+    }
 }
