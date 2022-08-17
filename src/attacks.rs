@@ -1,5 +1,7 @@
 use std::fmt;
 use crate::gladiator_struct::{self, Gladiator};
+extern crate rand;
+use rand::Rng;
 
 #[derive(PartialEq,Clone,Copy)]
 pub enum Attack {
@@ -23,15 +25,15 @@ impl fmt::Display for Attack {
 }
 
 impl Attack {
-    pub fn calculate_damage(&self,player: &Gladiator, enemy: &Gladiator, is_hit:&mut bool) -> u32 {
+    pub fn calculate_damage(&self,dmg_dealer: &Gladiator, dmg_receiver: &Gladiator, is_hit:&mut bool) -> u32 {
         let damage = match *self {
-            Attack::Stab => (player.get_str() as f32 * 1.5).floor() as u32,
+            Attack::Stab => (dmg_dealer.get_str() as f32 * 1.5).floor() as u32,
             Attack::Dodge => 0,
-            Attack::Tackle => (player.get_str() * 2) as u32,
-            Attack::Smash => (player.get_str() * 3) as u32,
+            Attack::Tackle => (dmg_dealer.get_str() * 2) as u32,
+            Attack::Smash => (dmg_dealer.get_str() * 3) as u32,
             Attack::Stun => 5,
         };
-        if self.check_if_hit(player,enemy){
+        if self.check_if_hit(dmg_dealer,dmg_receiver){
             *is_hit = true;
             return damage;
         }
@@ -42,8 +44,35 @@ impl Attack {
         }
     }
 
-    pub fn check_if_hit(&self,player: &Gladiator,enemy: &Gladiator) -> bool {
+    pub fn check_if_hit(&self,dmg_dealer: &Gladiator,dmg_receiver: &Gladiator) -> bool {
+        let chance = match *self {
+            Attack::Stab => 70,
+            Attack::Dodge => {
+                if dmg_dealer.get_spd() > dmg_receiver.get_spd() {
+                    60
+                }
+                else {
+                    10
+                }
+            },
+            Attack::Tackle => 60,
+            Attack::Smash => 50,
+            Attack::Stun => {
+                if dmg_dealer.get_str() > dmg_receiver.get_str() {
+                    60
+                }
+                else {
+                    10
+                }
+            },
+        }; // get percentage for hit
+
         //add random element here
-        true
+        let random_number = rand::thread_rng().gen_range(1..101);
+
+        //for debug
+        println!("random number: {}\nchance: {}",random_number,chance);
+
+        random_number < chance 
     }
 }

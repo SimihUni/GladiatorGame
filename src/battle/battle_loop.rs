@@ -67,9 +67,6 @@ pub fn battle_loop(battle_order: &mut u16, player: &mut Gladiator) {
                     *battle_order += 1;
                     break
                 }
-                else {
-                    continue;
-                }
             },
         };
 

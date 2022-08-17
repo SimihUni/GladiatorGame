@@ -3,6 +3,8 @@ use crate::tio;
 use crate::attacks;
 use std::str::FromStr;
 
+//TODO add choice for upping stats of gladiator
+
 ///check and print menu option for learning
 fn print_training_option(player: &gladiator_struct::Gladiator, cost: u8, mv:attacks::Attack, order_in_menu: u8) {
     print!("\n\t{}: {}",order_in_menu,mv);
