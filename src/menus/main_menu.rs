@@ -28,8 +28,8 @@ pub fn main_menu() {
             println!("\n\t1: Battle");
         }
         println!("\n\t2: Train");
-        println!("\n\t3: Shop /todo/");
-        println!("\n\t4: Exit");
+        //println!("\n\t3: Shop /todo/");
+        println!("\n\t3: Exit");
         println!("\n    Input:");
         //input segment
         let input = match tio::get_input() {
@@ -54,9 +54,9 @@ pub fn main_menu() {
             //training
             2 => training_menu::training_menu(&mut player, &mut tutorial),
             //shop
-            3 => todo!(),
+            //3 => todo!(),
             //exit
-            4 => std::process::exit(0),
+            3 => std::process::exit(0),
             _ => continue,
         }
     }
