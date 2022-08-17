@@ -54,6 +54,11 @@ impl Battle {
         self.turn_count += 1;
     }
 
+    ///get turn counter
+    pub fn get_turn_count(&self) -> u32 {
+        self.turn_count
+    }
+
     ///check if it is the players turn
     pub fn is_player_turn(&self) -> bool {
         self.players_turn
@@ -89,24 +94,46 @@ impl Battle {
 
     ///deals damage to player
     pub fn deal_damage_to_player(&mut self, atk: attacks::Attack) {
-        let damage_to_deal = atk.calculate_damage(&self.enemy,&self.player);
+        let mut is_hit: bool = false;
+        let damage_to_deal = atk.calculate_damage(&self.enemy,&self.player,&mut is_hit);
+        if !is_hit {
+            println!("{} failed to {} {}",self.enemy.get_name(),atk,self.player.get_name());
+            return;
+        }
+        println!("{} used the move {} on {}",self.enemy.get_name(),atk,self.player.get_name());
         if self.player.get_hp() - damage_to_deal <= 0 {
             //player dies
+            println!("{} dealt fatal damage to {}",self.enemy.get_name(),self.player.get_name());
             self.player.set_hp(0);
         }
         else {
+            if atk == attacks::Attack::Dodge || atk == attacks::Attack::Stun {
+                self.stun_player();
+            }
+            println!("{} dealt {} damage to {}",self.enemy.get_name(),damage_to_deal,self.player.get_name());
             self.player.set_hp(self.player.get_hp() - damage_to_deal)
         }
     }
 
     ///deals damage to enemy
     pub fn deal_damage_to_enemy(&mut self, atk: attacks::Attack) {
-        let damage_to_deal = atk.calculate_damage(&self.player,&self.enemy);
+        let mut is_hit: bool = false;
+        let damage_to_deal = atk.calculate_damage(&self.player,&self.enemy,&mut is_hit);
+        if !is_hit {
+            println!("{} failed to {} {}",self.player.get_name(),atk,self.enemy.get_name());
+            return;
+        }
+        println!("{} used the move {} on {}",self.player.get_name(),atk,self.enemy.get_name());
         if self.enemy.get_hp() < damage_to_deal {
             //player dies
+            println!("{} dealt fatal damage to {}",self.player.get_name(),self.enemy.get_name());
             self.enemy.set_hp(0);
         }
         else {
+            if atk == attacks::Attack::Dodge || atk == attacks::Attack::Stun {
+                self.stun_enemy();
+            }
+            println!("{} dealt {} damage to {}",self.player.get_name(),damage_to_deal,self.enemy.get_name());
             self.enemy.set_hp(self.enemy.get_hp() - damage_to_deal)
         }
     }

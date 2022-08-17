@@ -23,7 +23,7 @@ impl fmt::Display for Attack {
 }
 
 impl Attack {
-    pub fn calculate_damage(&self,player: &Gladiator, enemy: &Gladiator) -> u32 {
+    pub fn calculate_damage(&self,player: &Gladiator, enemy: &Gladiator, is_hit:&mut bool) -> u32 {
         let damage = match *self {
             Attack::Stab => (player.get_str() as f32 * 1.5).floor() as u32,
             Attack::Dodge => 0,
@@ -32,9 +32,11 @@ impl Attack {
             Attack::Stun => 5,
         };
         if self.check_if_hit(player,enemy){
+            *is_hit = true;
             return damage;
         }
         else {
+            *is_hit = false;
             //display fail to hit message TODO
             return 0;
         }

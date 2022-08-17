@@ -80,8 +80,8 @@ impl Gladiator {
     }
 
     ///set health points
-    pub fn set_hp(&mut self, new_tp: u32) {
-        self.health_points = new_tp;
+    pub fn set_hp(&mut self, new_hp: u32) {
+        self.health_points = new_hp;
     }
 
     ///get training points
