@@ -46,7 +46,9 @@ impl Gladiator {
 
     ///add a new move to the move verctor
     pub fn add_move(&mut self, new_move: attacks::Attack) {
-        self.moves.push(new_move);
+        if !self.is_move_known(&new_move){
+            self.moves.push(new_move);
+        }
     }
 
     ///gets the gladiators name
