@@ -7,6 +7,7 @@ fn print_move(mv:Attack, order: u8) {
     println!("\t{}: {}",order,mv);
 }
 
+///gives a tio menu for choosing one of the moves in the input move_list
 pub fn battle_choose_move(move_list: Vec<Attack>) -> Attack {
     loop {
         println!("\n\tChoose what move to use.\n");

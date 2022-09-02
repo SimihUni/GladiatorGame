@@ -1,5 +1,4 @@
 use std::str::FromStr;
-
 use crate::gladiator_struct::Gladiator;
 use crate::battle::battle_struct::Battle;
 use crate::battle::battle_choose_move::battle_choose_move;
@@ -12,8 +11,7 @@ use super::enemies::get_enemy_move;
 pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator, random_enemy: &mut bool) {
     //idea: could add intro depending on what battle it is.
 
-    //here should be a switch with enemies depending what battle order is, or randomized enemies made to match or challenge player
-    //temporary enemy for testing
+    //Gets random enemy, with a range of enemies depending on difficulty
     let enemy = get_enemy(*battle_difficulty,*random_enemy);
 
     //creating battle structure that controls the data that is relevent to the current battle.
@@ -27,7 +25,7 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator, random_e
         clear_screen();
         //idea: add items, which means adding a currency, and menu for choosing items and so on
         //idea: add move uses to balance strong moves --> Obsolete because turn limit
-        //idea: add battles against two enemies (not likely to happen)
+        //idea: add battles against two enemies (not likely to happen, reason: need for a battle loop rework)
 
         //screen with battle stats
         println!("{}",battle_info);
@@ -50,12 +48,14 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator, random_e
         match battle_info.check_if_anyone_is_dead() {
             Some(b) => {
                 if b {
-                    //idea: if battle is successful give player tp ( and money if shop is implemented)
+                    //idea: if battle is successful give player tp -> Done ( and money if shop is implemented)
                     println!("Player won.");
                     //adding 2 TP to player
                     player.set_tp(player.get_tp() + 2);
                     *battle_difficulty += 1;
+                    //check if player has beaten the end game boss
                     if enemy.get_name() == String::from_str("Boss Man").unwrap() {
+                        //turn on random enemies
                         *random_enemy = true;
                         println!("\n\tCongratulations you defeated the final boss.\n\n\tNow you can continue to fight random gladiators named Razvigor, but this was the end of the game\n");
                         press_to_continue();
@@ -76,6 +76,7 @@ pub fn battle_loop(battle_difficulty: &mut u16, player: &mut Gladiator, random_e
                     println!("Draw. Both gladiators survived the battle.");
                     //adding 1 TP to player
                     player.set_tp(player.get_tp() + 1);
+                    //increase battle difficulty
                     *battle_difficulty += 1;
                     break
                 }

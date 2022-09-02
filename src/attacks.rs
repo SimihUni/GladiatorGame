@@ -67,7 +67,6 @@ impl Attack {
             },
         }; // get percentage for hit
 
-        //add random element here
         let random_number = rand::thread_rng().gen_range(1..101);
 
         //for debug
