@@ -6,6 +6,7 @@ use crate::menus::main_menu;
 pub fn start_menu() {
     loop {
         clear_screen();
+        println!("Gladiators");
         print!("\n\t1: Start game\n\t2: Exit\n    Input: \n");
         //input segment
         let input = match tio::get_input() {
